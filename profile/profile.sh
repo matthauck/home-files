@@ -76,4 +76,5 @@ alias gradle="gradle --daemon"
 alias up="while [[ ! -f build.gradle ]] && [[ ! -d ../../workspace ]] && [[ ! -f .gitignore ]]; do cd ..; done"
 alias flushdns="sudo killall -HUP mDNSResponder"
 alias ag="ag --ignore out --ignore '*.min.js*'"
+alias p4changes="p4 changes -u $P4USER -s pending -c $P4CLIENT"
 
