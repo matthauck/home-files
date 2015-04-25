@@ -1,9 +1,9 @@
 
 # whether or not on mac
 if [ $(uname) = "Darwin" ]; then
-  IS_MAC=true
+  export IS_MAC=true
 else
-  IS_MAC=false
+  export IS_MAC=false
 fi
 
 # http://stackoverflow.com/a/246128
