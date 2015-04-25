@@ -30,7 +30,7 @@ function installed() {
 # don't check here whether it is installed yet
 # in case mac comes with an unwanted default (e.g. ctags, git)
 function install_brew() {
-  brew install "$1"
+  brew install $*
 }
 
 function has_brew() {
@@ -57,13 +57,13 @@ if ! installed "brew"; then
   brew update
 fi
 
-! has_brew "the_silver_searcher" || install_brew "the_silver_searcher"
-! has_brew "git" || install_brew "git"  
-! has_brew "cmake" || install_brew "cmake"
-! has_brew "ctags" || install_brew "ctags"
-! has_brew "openssl" || install_brew "openssl"
-! has_brew "wget" || install_brew "wget" 
-! has_brew "macvim" || install_brew "macvim" 
+! has_brew "the_silver_searcher" || install_brew the_silver_searcher
+! has_brew "git" || install_brew git 
+! has_brew "cmake" || install_brew cmake
+! has_brew "ctags" || install_brew ctags
+! has_brew "openssl" || install_brew openssl
+! has_brew "wget" || install_brew wget 
+! has_brew "macvim" || install_brew macvim --with-lua && brew linkapps macvim
 
 update_home_files
 update_dot_vim
