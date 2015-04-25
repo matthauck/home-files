@@ -44,7 +44,10 @@ yellow="\[\e[01;33m\]"
 blue="\[\e[01;34m\]"
 grey="\[\e[01;30m\]"
 
-# source min-configuration setup
+# set default color to blue. can override in conf.sh
+TERMINAL_COLOR=$blue
+
+# source custom configuration (before PS1...)
 source "${MYDIR}/conf.sh"
 
 ## PS1
