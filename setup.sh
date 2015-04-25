@@ -2,14 +2,14 @@
 
 set -e
 
-MYDIR=$(cd "$( dirname $0 )" && pwd )
+HOME_FILES_DIR=$(cd "$( dirname $0 )" && pwd )
 
 # add .profile
 if [[ ! -f ~/.profile ]] || ! grep profile.sh ~/.profile 1> /dev/null 2> /dev/null; then
   #"$LOADED_PROFILE" != "true" ]; then
   echo "" >> ~/.profile
   echo "# add home-files profile" >> ~/.profile
-  echo "source \"${MYDIR}/profile/profile.sh\"" >> ~/.profile
+  echo "source \"${HOME_FILES_DIR}/profile/profile.sh\"" >> ~/.profile
   source ~/.profile
 fi
 
@@ -19,7 +19,7 @@ if [ ! -L ~/.gitconfig ]; then
     echo "Moving old .gitconfig..."
     mv ~/.gitconfig ~/.gitconfig.bak
   fi
-  ln -s "${MYDIR}/git/gitconfig" ~/.gitconfig
+  ln -s "${HOME_FILES_DIR}/git/gitconfig" ~/.gitconfig
 fi
 
 function installed() {
@@ -53,5 +53,17 @@ fi
 ! has_brew "wget" || install_brew "wget" 
 ! has_brew "macvim" || install_brew "macvim" 
 
+pushd "$HOME_FILES_DIR" > /dev/null
+git submodule init && git submodule update
+popd > /dev/null
+
+if [ ! -d ~/.vim ]; then 
+  ln -s "${HOME_FILES_DIR}/dotvim" ~/.vim
+  cp "${HOME_FILES_DIR}/dotvim/sample.vimrc" ~/.vimrc
+
+  pushd ~/.vim > /dev/null
+  git submodule init && git submodule update
+  popd > /dev/null
+fi
 
 
