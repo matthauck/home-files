@@ -38,6 +38,18 @@ function has_brew() {
   test -z "$found"
 }
 
+function update_home_files() {
+  pushd "$HOME_FILES_DIR" > /dev/null
+  git submodule init && git submodule update
+  popd > /dev/null
+}
+
+function update_dot_vim() {
+  pushd "$HOME_FILES_DIR/dotvim" > /dev/null
+  git submodule init && git submodule update
+  popd > /dev/null
+}
+
 # install homebrew if not present
 if ! installed "brew"; then
   echo "Installing homebrew..."
@@ -53,17 +65,17 @@ fi
 ! has_brew "wget" || install_brew "wget" 
 ! has_brew "macvim" || install_brew "macvim" 
 
-pushd "$HOME_FILES_DIR" > /dev/null
-git submodule init && git submodule update
-popd > /dev/null
+update_home_files
+update_dot_vim
 
-if [ ! -d ~/.vim ]; then 
+if [ ! -L ~/.vim ]; then 
+  if [ -e ~/.vim ]; then
+    echo "Moving old .vim folder..."
+    mv ~/.vim ~/.vim.bak
+  fi 
   ln -s "${HOME_FILES_DIR}/dotvim" ~/.vim
-  cp "${HOME_FILES_DIR}/dotvim/sample.vimrc" ~/.vimrc
-
-  pushd ~/.vim > /dev/null
-  git submodule init && git submodule update
-  popd > /dev/null
 fi
-
+if [ ! -e ~/.vimrc ]; then 
+  cp "${HOME_FILES_DIR}/dotvim/sample.vimrc" ~/.vimrc
+fi 
 
