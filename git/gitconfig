@@ -1,0 +1,21 @@
+[user]
+  # use environment variables to avoid putting info in this file.
+  # see GIT_AUTHOR_NAME, GIT_COMITTER_NAME, GIT_AUTHOR_EMAIL, GIT_COMMITTER_EMAIL
+[branch]
+  autosetupmerge = true
+  autosetuprebase = always
+[color]
+  status = auto
+  branch = auto
+[alias]
+  lg = log --graph --date=short --pretty=format:'%C(blue)%cd %C(magenta)| %C(blue)%h %C(magenta)| %Creset%s %C(yellow)<%an>%C(red)%d'
+  lgf = log -C -M --follow --graph --date=short --pretty=format:'%C(blue)%cd %C(magenta)| %C(blue)%h %C(magenta)| %Creset%s %C(yellow)<%an>%C(red)%d'
+  l  = log --name-status --relative
+  lp = log -p --relative -b -w --stat
+  d  = diff -w -b
+  s = show -w -b --stat -p
+  ff = pull --ff-only
+[branch "master"]
+  rebase = true
+[push]
+  default = simple
