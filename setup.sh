@@ -2,7 +2,18 @@
 
 set -e
 
+# get absolute path to directory of setup.sh
 HOME_FILES_DIR=$(cd "$( dirname $0 )" && pwd )
+
+function update_git_submodule() {
+  # parens -> `cd` has no net change to directory
+  (cd "$1" && git submodule init && git submodule update)
+}
+
+# update home-files
+update_git_submodule "$HOME_FILES_DIR"
+# update dotvim
+update_git_submodule "$HOME_FILES_DIR/dotvim"
 
 # add .profile
 if [[ ! -f ~/.profile ]] || ! grep profile.sh ~/.profile 1> /dev/null 2> /dev/null; then
@@ -23,9 +34,6 @@ if [ ! -L ~/.gitconfig ]; then
 fi
 
 # add vim config
-update_home_files
-update_dot_vim
-
 if [ ! -L ~/.vim ]; then 
   if [ -e ~/.vim ]; then
     echo "Moving old .vim folder..."
@@ -41,18 +49,6 @@ fi
 
 function installed() {
   which $1 1> /dev/null 2>&1
-}
-
-function update_home_files() {
-  pushd "$HOME_FILES_DIR" > /dev/null
-  git submodule init && git submodule update
-  popd > /dev/null
-}
-
-function update_dot_vim() {
-  pushd "$HOME_FILES_DIR/dotvim" > /dev/null
-  git submodule init && git submodule update
-  popd > /dev/null
 }
 
 if [ "$IS_MAC" = true ]; then
@@ -80,6 +76,6 @@ if [ "$IS_MAC" = true ]; then
   ! has_brew "ctags" || install_brew ctags
   ! has_brew "openssl" || install_brew openssl
   ! has_brew "wget" || install_brew wget 
-  ! has_brew "macvim" || install_brew macvim --with-lua && brew linkapps macvim
+  ! has_brew "macvim" || (install_brew macvim --with-lua && brew linkapps macvim)
 fi
 
