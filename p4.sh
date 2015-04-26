@@ -56,7 +56,7 @@ if [ ! -e $P4_DIR/.complete ]; then
 fi
 
 
-popd
+popd > /dev/null
 rm -fr $TMP_DIR
 
 
