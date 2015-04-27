@@ -2,10 +2,17 @@
 # whether or not on mac
 if [ $(uname) = "Darwin" ]; then
   export IS_MAC=true
+  export IS_X64=true
 else
   export IS_MAC=false
+  if [ $(uname -m) =~ i\d86 ]; then
+    export IS_X64=false
+  else 
+    export IS_X64=true
+  fi
 fi
 
+ 
 # http://stackoverflow.com/a/246128
 MYDIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
@@ -67,8 +74,14 @@ alias ps1withgit="export PS1='$PS1WITHGIT'"
 # aliases
 
 alias ls='ls -G'
-alias vi='mvim -v'
-alias vim='mvim -v'
+
+if [ "$IS_MAC" = true ]; then
+  alias vi='mvim -v'
+  alias vim='mvim -v'
+else
+  alias vi='vim'
+fi
+
 alias Rgrep='find . | xargs grep' # for when `grep -R` is not present...
 alias grep='grep --color'
 alias be='bundle exec'

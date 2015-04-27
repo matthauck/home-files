@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Download and install perforce `p4` command line tool
 # Also download the p4 c++ and python APIs and install
@@ -13,7 +13,8 @@ pushd $TMP_DIR > /dev/null
 if [ "$IS_MAC" = true ]; then
   CLI_URL=http://www.perforce.com/downloads/perforce/r15.1/bin.macosx105x86_64/p4
 else
-  echo "Only mac is supported right now"; exit 1
+  # assume x86 linux
+  CLI_URL=http://filehost.perforce.com/perforce/r15.1/bin.linux26x86/p4api.tgz
 fi
 
 if [ ! -e /usr/local/bin/p4 ]; then
@@ -27,19 +28,22 @@ P4_DIR=/usr/local/opt/perforce
 P4_API_DIR=$P4_DIR/p4-api
 
 if [ ! -e $P4_DIR/.complete ]; then
-  echo "Downloading p4 api..."
-  rm -fr ${P4_DIR}
-  mkdir -p ${P4_DIR}
+  echo "Installing p4 api (may require password)..."
+  sudo rm -fr ${P4_DIR}
+  sudo mkdir -p ${P4_DIR}
 
   if [ "$IS_MAC" = true ]; then
     API_URL=http://cdist2.perforce.com/perforce/r15.1/bin.macosx105x86_64/p4api.tgz
+  else
+    # assume x86 linux
+    API_URL=http://cdist2.perforce.com/perforce/r15.1/bin.linux26x86/p4api.tgz
   fi
 
   curl -L -o p4api.tgz $API_URL
   tar -xzf p4api.tgz
 
   # there should only be one...
-  mv p4api-* $P4_API_DIR
+  sudo mv p4api-* $P4_API_DIR
     
   # install p4 python
   curl -L -o p4python.tgz http://www.perforce.com/downloads/perforce/r14.2/bin.tools/p4python.tgz
@@ -49,10 +53,9 @@ if [ ! -e $P4_DIR/.complete ]; then
 
   python setup.py build --apidir ${P4_API_DIR}
 
-  echo "Please enter your password to install the p4 python api"
   sudo python setup.py install --apidir ${P4_API_DIR}
 
-  touch $P4_DIR/.complete
+  sudo touch $P4_DIR/.complete
 fi
 
 

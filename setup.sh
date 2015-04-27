@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e
 
@@ -22,6 +22,8 @@ if [[ ! -f ~/.profile ]] || ! grep profile.sh ~/.profile 1> /dev/null 2> /dev/nu
   echo "# add home-files profile" >> ~/.profile
   echo "source \"${HOME_FILES_DIR}/profile/profile.sh\"" >> ~/.profile
   source ~/.profile
+
+  cp "${HOME_FILES_DIR}/profile/conf.sh.sample" "${HOME_FILES_DIR}/profile/conf.sh"
 fi
 
 # add .gitconfig
@@ -70,6 +72,7 @@ if [ "$IS_MAC" = true ]; then
     brew update
   fi
 
+  echo "Installing packagess..."
   ! has_brew "the_silver_searcher" || install_brew the_silver_searcher
   ! has_brew "git" || install_brew git 
   ! has_brew "cmake" || install_brew cmake
@@ -77,5 +80,19 @@ if [ "$IS_MAC" = true ]; then
   ! has_brew "openssl" || install_brew openssl
   ! has_brew "wget" || install_brew wget 
   ! has_brew "macvim" || (install_brew macvim --with-lua && brew linkapps macvim)
+
+else
+
+  echo "Installing packages (may require password)..."
+  ! installed "ag" || sudo apt-get install the_silver_searcher
+  ! installed "git" || sudo apt-get install  git 
+  ! installed "cmake" || sudo apt-get install  cmake
+  ! installed "ctags" || sudo apt-get install  ctags
+  ! installed "openssl" || sudo apt-get install  openssl
+  ! installed "wget" || sudo apt-get install  wget 
+  ! installed "curl" || sudo apt-get install  curl
+  ! installed "vim" || sudo apt-get install  vim-nox
+  sudo apt-get install python-dev
+
 fi
 
