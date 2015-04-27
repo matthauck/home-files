@@ -5,7 +5,7 @@ if [ $(uname) = "Darwin" ]; then
   export IS_X64=true
 else
   export IS_MAC=false
-  if [ $(uname -m) =~ i\d86 ]; then
+  if [[ $(uname -m) =~ i[0-9]86 ]]; then
     export IS_X64=false
   else 
     export IS_X64=true
