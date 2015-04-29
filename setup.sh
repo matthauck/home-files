@@ -84,15 +84,16 @@ if [ "$IS_MAC" = true ]; then
 else
 
   echo "Installing packages (may require password)..."
-  ! installed "ag" || sudo apt-get install the_silver_searcher
-  ! installed "git" || sudo apt-get install  git 
-  ! installed "cmake" || sudo apt-get install  cmake
-  ! installed "ctags" || sudo apt-get install  ctags
-  ! installed "openssl" || sudo apt-get install  openssl
-  ! installed "wget" || sudo apt-get install  wget 
-  ! installed "curl" || sudo apt-get install  curl
-  ! installed "vim" || sudo apt-get install  vim-nox
-  sudo apt-get install python-dev
+  ! installed "ag" || sudo apt-get install -y the_silver_searcher
+  ! installed "git" || sudo apt-get install -y  git 
+  ! installed "cmake" || sudo apt-get install -y  cmake
+  ! installed "ctags" || sudo apt-get install -y  ctags
+  ! installed "openssl" || sudo apt-get install -y  openssl
+  ! installed "wget" || sudo apt-get install -y  wget 
+  ! installed "curl" || sudo apt-get install -y  curl
+  ! installed "vim" || sudo apt-get install -y  vim-nox
+  sudo apt-get install -y python-dev
+  sudo apt-get install -y build-essential
 
 fi
 
