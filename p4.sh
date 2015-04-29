@@ -14,13 +14,14 @@ if [ "$IS_MAC" = true ]; then
   CLI_URL=http://www.perforce.com/downloads/perforce/r15.1/bin.macosx105x86_64/p4
 else
   # assume x86 linux
-  CLI_URL=http://filehost.perforce.com/perforce/r15.1/bin.linux26x86/p4api.tgz
+  CLI_URL=http://filehost.perforce.com/perforce/r15.1/bin.linux26x86/p4
 fi
 
 if [ ! -e /usr/local/bin/p4 ]; then
   echo "Downloading p4 command line tool (may require password)..."
+  echo $CLI_URL
   curl -o p4 $CLI_URL
-  chmod +x p4
+  chmod 755 p4
   sudo mv p4 /usr/local/bin/p4
 fi
 
@@ -41,6 +42,7 @@ if [ ! -e $P4_DIR/.complete ]; then
     API_URL=http://cdist2.perforce.com/perforce/r15.1/bin.linux26x86/p4api.tgz
   fi
 
+  echo $API_URL
   curl -L -o p4api.tgz $API_URL
   tar -xzf p4api.tgz
 
@@ -48,7 +50,9 @@ if [ ! -e $P4_DIR/.complete ]; then
   sudo mv p4api-* $P4_API_DIR
     
   # install p4 python
-  curl -L -o p4python.tgz http://www.perforce.com/downloads/perforce/r14.2/bin.tools/p4python.tgz
+  P4PYTHON_URL=http://www.perforce.com/downloads/perforce/r14.2/bin.tools/p4python.tgz
+  echo $P4PYTHON_URL
+  curl -L -o p4python.tgz $P4PYTHON_URL
   tar -xzf p4python.tgz
   # there should only be one
   cd p4python-*
