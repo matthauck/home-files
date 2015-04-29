@@ -18,8 +18,10 @@ else
 fi
 
 if [ ! -e /usr/local/bin/p4 ]; then
-  echo "Downloading p4 command line tool..."
-  curl -o /usr/local/bin/p4 $CLI_URL
+  echo "Downloading p4 command line tool (may require password)..."
+  curl -o p4 $CLI_URL
+  chmod +x p4
+  sudo mv p4 /usr/local/bin/p4
 fi
 
 ## p4 c++ api
