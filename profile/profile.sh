@@ -7,12 +7,12 @@ else
   export IS_MAC=false
   if [[ $(uname -m) =~ i[0-9]86 ]]; then
     export IS_X64=false
-  else 
+  else
     export IS_X64=true
   fi
 fi
 
- 
+
 # http://stackoverflow.com/a/246128
 MYDIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
@@ -27,7 +27,7 @@ fi
 export NODE_PATH=/usr/local/lib/node_modules
 export GROOVY_HOME=/usr/local/opt/groovy/libexec
 export JAVA_HOME=/Library/Java/Home
-export JAVA_OPTS="-Xms512m -Xmx2048m" 
+export JAVA_OPTS="-Xms512m -Xmx2048m"
 export GOPATH=/usr/local/bin
 
 export EDITOR="vim"
@@ -40,10 +40,10 @@ export PAGER=less
 # setup path
 export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH:$HOME/.cabal/bin
 
-# init rbenv 
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+# init rbenv
+if which rbenv > /dev/null 2>&1 ; then eval "$(rbenv init -)"; fi
 
-# some terminal colors 
+# some terminal colors
 reset="\[\e[00m\]"
 red="\[\e[01;31m\]"
 green="\[\e[01;32m\]"
