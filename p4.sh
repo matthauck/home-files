@@ -13,8 +13,11 @@ pushd $TMP_DIR > /dev/null
 if [ "$IS_MAC" = true ]; then
   CLI_URL=http://www.perforce.com/downloads/perforce/r15.1/bin.macosx105x86_64/p4
 else
-  # assume x86 linux
-  CLI_URL=http://filehost.perforce.com/perforce/r15.1/bin.linux26x86/p4
+  if [ "$IS_X64" = true ]; then
+    CLI_URL=http://filehost.perforce.com/perforce/r15.1/bin.linux26x86_64/p4
+  else
+    CLI_URL=http://filehost.perforce.com/perforce/r15.1/bin.linux26x86/p4
+  fi
 fi
 
 if [ ! -e /usr/local/bin/p4 ]; then
@@ -38,8 +41,11 @@ if [ ! -e $P4_DIR/.complete ]; then
   if [ "$IS_MAC" = true ]; then
     API_URL=http://cdist2.perforce.com/perforce/r15.1/bin.macosx105x86_64/p4api.tgz
   else
-    # assume x86 linux
-    API_URL=http://cdist2.perforce.com/perforce/r15.1/bin.linux26x86/p4api.tgz
+    if [ "$IS_X64" = true ]; then
+      API_URL=http://cdist2.perforce.com/perforce/r15.1/bin.linux26x86_64/p4api.tgz
+    else
+      API_URL=http://cdist2.perforce.com/perforce/r15.1/bin.linux26x86/p4api.tgz
+    fi
   fi
 
   echo $API_URL
@@ -48,7 +54,7 @@ if [ ! -e $P4_DIR/.complete ]; then
 
   # there should only be one...
   sudo mv p4api-* $P4_API_DIR
-    
+
   # install p4 python
   P4PYTHON_URL=http://www.perforce.com/downloads/perforce/r14.2/bin.tools/p4python.tgz
   echo $P4PYTHON_URL
