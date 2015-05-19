@@ -1,2 +1,3 @@
 
-powershell -ExecutionPolicy Unrestricted .\setup.ps1
+SET home_files_dir=%~dp0
+powershell -ExecutionPolicy Unrestricted %home_files_dir%setup.ps1
