@@ -8,7 +8,7 @@ set -e
 ORIG_DIR=$(cd "$( dirname $0 )" && pwd )
 
 TMP_DIR=$(mktemp -d /tmp/p4temp.XXXX)
-pushd $TMP_DIR
+pushd $TMP_DIR > /dev/null
 
 ## p4 cli
 
@@ -22,7 +22,9 @@ else
   fi
 fi
 
-if [ ! -e /usr/local/bin/p4 ]; then
+if [ -e /usr/local/bin/p4 ]; then
+  echo "p4 cli already installed"
+else
   echo "Downloading p4 command line tool (may require password)..."
   echo $CLI_URL
   curl -o p4 $CLI_URL
@@ -35,8 +37,17 @@ fi
 P4_DIR=/usr/local/opt/perforce
 P4_API_DIR=$P4_DIR/p4-api
 
-if [ ! -e $P4_DIR/.complete ]; then
+if [ -e $P4_DIR/.complete-r15.1 ]; then
+  echo "p4 api already installed"
+else
+  # api version 15.1 requires openssl 1.0.1
+  if ! [[ $(openssl version) =~ 1\.0\.1 ]]; then
+    echo "Error: P4 API requires OpenSSL 1.0.1"
+    exit 1
+  fi
+
   echo "Installing p4 api (may require password)..."
+  echo "(build dir: $TMP_DIR)"
   sudo rm -fr ${P4_DIR}
   sudo mkdir -p ${P4_DIR}
 
@@ -58,7 +69,7 @@ if [ ! -e $P4_DIR/.complete ]; then
   sudo mv p4api-* $P4_API_DIR
 
   # install p4 python
-  P4PYTHON_URL=http://www.perforce.com/downloads/perforce/r14.2/bin.tools/p4python.tgz
+  P4PYTHON_URL=http://www.perforce.com/downloads/perforce/r15.1/bin.tools/p4python.tgz
   echo $P4PYTHON_URL
   curl -L -o p4python.tgz $P4PYTHON_URL
   tar -xzf p4python.tgz
@@ -78,7 +89,7 @@ fi
 
 
 popd > /dev/null
-rm -fr $TMP_DIR
+sudo rm -fr $TMP_DIR
 
 
 
