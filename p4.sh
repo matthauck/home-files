@@ -6,7 +6,7 @@
 set -e
 
 TMP_DIR=$(mktemp -d /tmp/p4temp.XXXX)
-pushd $TMP_DIR > /dev/null
+pushd $TMP_DIR
 
 ## p4 cli
 
@@ -63,9 +63,9 @@ if [ ! -e $P4_DIR/.complete ]; then
   # there should only be one
   cd p4python-*
 
-  python setup.py build --apidir ${P4_API_DIR}
+  python setup.py build --apidir ${P4_API_DIR} --ssl
 
-  sudo python setup.py install --apidir ${P4_API_DIR}
+  sudo python setup.py install --apidir ${P4_API_DIR} --ssl
 
   sudo touch $P4_DIR/.complete
 fi
