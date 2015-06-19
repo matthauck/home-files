@@ -28,7 +28,7 @@ fi
 
 # add .gitconfig
 if [ ! -L ~/.gitconfig ]; then
-  if [ -f ~/.gitconfig ]; then 
+  if [ -f ~/.gitconfig ]; then
     echo "Moving old .gitconfig..."
     mv ~/.gitconfig ~/.gitconfig.bak
   fi
@@ -36,16 +36,16 @@ if [ ! -L ~/.gitconfig ]; then
 fi
 
 # add vim config
-if [ ! -L ~/.vim ]; then 
+if [ ! -L ~/.vim ]; then
   if [ -e ~/.vim ]; then
     echo "Moving old .vim folder..."
     mv ~/.vim ~/.vim.bak
-  fi 
+  fi
   ln -s "${HOME_FILES_DIR}/dotvim" ~/.vim
 fi
-if [ ! -e ~/.vimrc ]; then 
+if [ ! -e ~/.vimrc ]; then
   cp "${HOME_FILES_DIR}/dotvim/sample.vimrc" ~/.vimrc
-fi 
+fi
 
 # install some basic oft-used packages
 
@@ -74,26 +74,27 @@ if [ "$IS_MAC" = true ]; then
 
   echo "Installing packagess..."
   ! has_brew "the_silver_searcher" || install_brew the_silver_searcher
-  ! has_brew "git" || install_brew git 
+  ! has_brew "git" || install_brew git
   ! has_brew "cmake" || install_brew cmake
   ! has_brew "ctags" || install_brew ctags
   ! has_brew "openssl" || install_brew openssl
-  ! has_brew "wget" || install_brew wget 
+  ! has_brew "wget" || install_brew wget
   ! has_brew "macvim" || (install_brew macvim --with-lua && brew linkapps macvim)
 
 else
 
   echo "Installing packages (may require password)..."
   ! installed "ag" || sudo apt-get install -y the_silver_searcher
-  ! installed "git" || sudo apt-get install -y  git 
+  ! installed "git" || sudo apt-get install -y  git
   ! installed "cmake" || sudo apt-get install -y  cmake
   ! installed "ctags" || sudo apt-get install -y  ctags
   ! installed "openssl" || sudo apt-get install -y  openssl
-  ! installed "wget" || sudo apt-get install -y  wget 
+  ! installed "wget" || sudo apt-get install -y  wget
   ! installed "curl" || sudo apt-get install -y  curl
   ! installed "vim" || sudo apt-get install -y  vim-nox
   sudo apt-get install -y python-dev
   sudo apt-get install -y build-essential
+  sudo apt-get install -y libssl-dev
 
 fi
 
