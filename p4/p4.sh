@@ -5,6 +5,8 @@
 
 set -e
 
+ORIG_DIR=$(cd "$( dirname $0 )" && pwd )
+
 TMP_DIR=$(mktemp -d /tmp/p4temp.XXXX)
 pushd $TMP_DIR
 
@@ -62,6 +64,10 @@ if [ ! -e $P4_DIR/.complete ]; then
   tar -xzf p4python.tgz
   # there should only be one
   cd p4python-*
+
+  # fix setup.py for older macs
+  chmod +w setup.py
+  patch -p0 < "$ORIG_DIR/patch-setup.py.diff"
 
   python setup.py build --apidir ${P4_API_DIR} --ssl
 
