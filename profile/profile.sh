@@ -55,7 +55,7 @@ grey="\[\e[01;30m\]"
 TERMINAL_COLOR=$blue
 
 # source custom configuration (before PS1...)
-[[ -e "${MYDIR}/conf.sh" ]] && source "${MYDIR}/conf.sh"
+[[ -e ~/conf.sh ]] && source ~/conf.sh
 
 ## PS1
 export PS1WITHGIT=$TERMINAL_COLOR'['$grey'$(date +"%H:%M")'$TERMINAL_COLOR'] '$TERMINAL_COLOR'\h\\\u ['$grey'\w'$TERMINAL_COLOR']'$grey'$(__git_ps1)'$TERMINAL_COLOR' \$ '$reset

@@ -23,7 +23,7 @@ if [[ ! -f ~/.profile ]] || ! grep profile.sh ~/.profile 1> /dev/null 2> /dev/nu
   echo "source \"${HOME_FILES_DIR}/profile/profile.sh\"" >> ~/.profile
   source ~/.profile
 
-  cp "${HOME_FILES_DIR}/profile/conf.sh.sample" "${HOME_FILES_DIR}/profile/conf.sh"
+  cp "${HOME_FILES_DIR}/profile/conf.sh.sample" ~/conf.sh
 fi
 
 # add .gitconfig
