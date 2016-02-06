@@ -13,12 +13,12 @@ pushd $TMP_DIR > /dev/null
 ## p4 cli
 
 if [ "$IS_MAC" = true ]; then
-  CLI_URL=http://www.perforce.com/downloads/perforce/r15.1/bin.macosx105x86_64/p4
+  CLI_URL=http://cdist2.perforce.com/perforce/r15.2/bin.macosx105x86_64/p4
 else
   if [ "$IS_X64" = true ]; then
-    CLI_URL=http://filehost.perforce.com/perforce/r15.1/bin.linux26x86_64/p4
+    CLI_URL=http://cdist2.perforce.com/perforce/r15.2/bin.linux26x86_64/p4
   else
-    CLI_URL=http://filehost.perforce.com/perforce/r15.1/bin.linux26x86/p4
+    CLI_URL=http://cdist2.perforce.com/perforce/r15.2/bin.linux26x86/p4
   fi
 fi
 
@@ -27,7 +27,7 @@ if [ -e /usr/local/bin/p4 ]; then
 else
   echo "Downloading p4 command line tool (may require password)..."
   echo $CLI_URL
-  curl -o p4 $CLI_URL
+  curl -L -o p4 $CLI_URL
   chmod 755 p4
   sudo mv p4 /usr/local/bin/p4
 fi
@@ -52,12 +52,12 @@ else
   sudo mkdir -p ${P4_DIR}
 
   if [ "$IS_MAC" = true ]; then
-    API_URL=http://cdist2.perforce.com/perforce/r15.1/bin.macosx105x86_64/p4api.tgz
+    API_URL=http://cdist2.perforce.com/perforce/r15.2/bin.macosx105x86_64/p4api.tgz
   else
     if [ "$IS_X64" = true ]; then
-      API_URL=http://cdist2.perforce.com/perforce/r15.1/bin.linux26x86_64/p4api.tgz
+      API_URL=http://cdist2.perforce.com/perforce/r15.2/bin.linux26x86_64/p4api.tgz
     else
-      API_URL=http://cdist2.perforce.com/perforce/r15.1/bin.linux26x86/p4api.tgz
+      API_URL=http://cdist2.perforce.com/perforce/r15.2/bin.linux26x86/p4api.tgz
     fi
   fi
 
@@ -69,7 +69,7 @@ else
   sudo mv p4api-* $P4_API_DIR
 
   # install p4 python
-  P4PYTHON_URL=http://www.perforce.com/downloads/perforce/r15.1/bin.tools/p4python.tgz
+  P4PYTHON_URL=http://www.perforce.com/downloads/perforce/r15.2/bin.tools/p4python.tgz
   echo $P4PYTHON_URL
   curl -L -o p4python.tgz $P4PYTHON_URL
   tar -xzf p4python.tgz
