@@ -14,6 +14,7 @@
   lp = log -p --relative -b -w --stat
   d  = diff -w -b
   s = show -w -b --stat -p
+  st = status -s -b
   ff = pull --ff-only
 [branch "master"]
   rebase = true
