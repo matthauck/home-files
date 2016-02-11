@@ -7,6 +7,20 @@ set -e
 
 ORIG_DIR=$(cd "$( dirname $0 )" && pwd )
 
+if which apt-get > /dev/null; then
+
+  sudo apt-key add $ORIG_DIR/perforce.pubkey
+
+  codename=$(lsb_release -c | awk '{print $2}')
+  echo "deb http://package.perforce.com/apt/ubuntu $codename release" | sudo tee  /etc/apt/sources.list.d/perforce.list
+
+  sudo apt-get update
+
+  sudo apt-get install -y helix-cli perforce-p4python
+
+  exit
+fi
+
 TMP_DIR=$(mktemp -d /tmp/p4temp.XXXX)
 pushd $TMP_DIR > /dev/null
 
