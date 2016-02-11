@@ -71,6 +71,20 @@ fi
 alias ps1nogit="export PS1='$PS1NOGIT'"
 alias ps1withgit="export PS1='$PS1WITHGIT'"
 
+# enable/launch gpg-agent if installed
+if which gpg-agent > /dev/null; then
+  if test -f $HOME/.gpg-agent-info && \
+    kill -0 `cut -d: -f 2 $HOME/.gpg-agent-info` 2>/dev/null; then
+    eval $(cat $HOME/.gpg-agent-info)
+    export GPG_AGENT_INFO
+    export SSH_AUTH_SOCK
+    export SSH_AGENT_PID
+  else
+    eval $(gpg-agent --daemon --write-env-file --enable-ssh)
+  fi
+  export GPG_TTY=$(tty)
+fi
+
 # aliases
 
 alias ls='ls -G'
