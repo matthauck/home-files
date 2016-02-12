@@ -26,7 +26,11 @@ fi
 # useful homes, opts variables
 export NODE_PATH=/usr/local/lib/node_modules
 export GROOVY_HOME=/usr/local/opt/groovy/libexec
-export JAVA_HOME=/Library/Java/Home
+
+if [ "$IS_MAC" = true ]; then
+  export JAVA_HOME=/Library/Java/Home
+fi
+
 export JAVA_OPTS="-Xms512m -Xmx2048m"
 export GOPATH=/usr/local/bin
 
@@ -99,6 +103,7 @@ alias ls='ls -G'
 if [ "$IS_MAC" = true ]; then
   alias vi='mvim -v'
   alias vim='mvim -v'
+  alias flushdns="sudo killall -HUP mDNSResponder"
 else
   alias vi='vim'
 fi
@@ -108,7 +113,6 @@ alias grep='grep --color'
 alias be='bundle exec'
 alias gradle="gradle --daemon"
 alias up="while [[ ! -f build.gradle ]] && [[ ! -d ../../workspace ]] && [[ ! -f .gitignore ]]; do cd ..; done"
-alias flushdns="sudo killall -HUP mDNSResponder"
-alias ag="ag --ignore out --ignore '*.min.js*'"
 alias p4changes="p4 changes -u $P4USER -s pending -c $P4CLIENT"
+
 
