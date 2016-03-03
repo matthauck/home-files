@@ -46,6 +46,15 @@ fi
 if [ ! -e ~/.vimrc ]; then
   cp "${HOME_FILES_DIR}/dotvim/sample.vimrc" ~/.vimrc
 fi
+# setup neovim
+if [ ! -L ~/.config/nvim ]; then
+  mkdir -p ~/.config > /dev/null
+  ln -s ~/.vim ~/.config/nvim
+fi
+if [ ! -e ~/.nvimrc ]; then
+  cp "${HOME_FILES_DIR}/dotvim/sample.nvimrc" ~/.nvimrc
+fi
+
 
 # install some basic oft-used packages
 
