@@ -23,18 +23,26 @@ if [ -d /usr/local/bash_completion.d ]; then
   GIT_PS1_SHOWDIRTYSTATE=TRUE
 fi
 
+if [ "$IS_MAC" = true ]; then
+  if [ -f $(brew --prefix)/etc/bash_completion ]; then
+    . $(brew --prefix)/etc/bash_completion
+  fi
+fi
+
 # useful homes, opts variables
 export NODE_PATH=/usr/local/lib/node_modules
 export GROOVY_HOME=/usr/local/opt/groovy/libexec
 
 if [ "$IS_MAC" = true ]; then
   export JAVA_HOME=/Library/Java/Home
+  export EDITOR="mvim -v"
+else
+  export EDITOR="vim"
 fi
 
 export JAVA_OPTS="-Xms512m -Xmx2048m"
 export GOPATH=/usr/local/bin
 
-export EDITOR="vim"
 export FIGNORE=".svn:.git:.DS_Store"
 export PAGER=less
 
