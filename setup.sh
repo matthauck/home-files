@@ -55,6 +55,14 @@ if [ ! -e ~/.nvimrc ]; then
   cp "${HOME_FILES_DIR}/dotvim/sample.nvimrc" ~/.nvimrc
 fi
 
+# setup tmux config
+if [ ! -L ~/.tmux.conf ]; then
+  if [ -e ~/.tmux.conf ]; then
+    echo "Moving old .tmux.conf..."
+    mv ~/.tmux.conf ~/.tmux.conf.bak
+  fi
+  ln -s "${HOME_FILES_DIR}/tmux.conf" ~/.tmux.conf
+fi
 
 # install some basic oft-used packages
 
@@ -90,27 +98,37 @@ if [ "$IS_MAC" = true ]; then
   ! has_brew "wget" || install_brew wget
   ! has_brew "macvim" || (install_brew macvim --with-lua && brew linkapps macvim)
   ! has_brew "node" || install_brew node
+  ! has_brew "tmux" || install_brew tmux
 
 else
 
+  function installit() {
+    for pkg in $*; do
+      if ! dpkg --get-selections | grep install | grep -w "$pkg" > /dev/null; then
+        sudo apt-get install -y $pkg
+      fi
+    done
+  }
+
   echo "Installing packages (may require password)..."
-  sudo apt-get install -y silversearcher-ag
-  sudo apt-get install -y git
-  sudo apt-get install -y cmake
-  sudo apt-get install -y ctags
-  sudo apt-get install -y openssl libssl-dev
-  sudo apt-get install -y openssh-server
-  sudo apt-get install -y wget
-  sudo apt-get install -y curl
-  sudo apt-get install -y vim-nox
-  sudo apt-get install -y python-dev
-  sudo apt-get install -y build-essential
-  sudo apt-get install -y gnupg gnupg2 gpgsm
+  installit silversearcher-ag
+  installit git
+  installit cmake
+  installit ctags
+  installit openssl libssl-dev
+  installit openssh-server
+  installit wget
+  installit curl
+  installit vim-nox
+  installit python-dev
+  installit build-essential
+  installit gnupg gnupg2 gpgsm
+  installit tmux
 
   if [ ! -f /etc/apt/sources.list.d/nodesource.list ]; then
     sudo $HOME_FILES_DIR/node_setup_4.x.sh
   fi
-  sudo apt-get install -y nodejs
+  installit nodejs
 
 fi
 

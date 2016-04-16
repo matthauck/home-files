@@ -9,6 +9,14 @@ ORIG_DIR=$(cd "$( dirname $0 )" && pwd )
 
 if which apt-get > /dev/null; then
 
+  function installit() {
+    for pkg in $*; do
+      if ! dpkg --get-selections | grep install | grep -w "$pkg" > /dev/null; then
+        sudo apt-get install -y $pkg
+      fi
+    done
+  }
+
   if [ ! -f /etc/apt/sources.list.d/perforce.list ]; then
       sudo apt-key add $ORIG_DIR/perforce.pubkey
 
@@ -18,7 +26,7 @@ if which apt-get > /dev/null; then
       sudo apt-get update
   fi
 
-  sudo apt-get install -y helix-cli perforce-p4python
+  installit helix-cli perforce-p4python
 
   exit
 fi
