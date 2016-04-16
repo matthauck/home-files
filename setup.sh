@@ -89,6 +89,7 @@ if [ "$IS_MAC" = true ]; then
   ! has_brew "openssl" || install_brew openssl
   ! has_brew "wget" || install_brew wget
   ! has_brew "macvim" || (install_brew macvim --with-lua && brew linkapps macvim)
+  ! has_brew "node" || install_brew node
 
 else
 
@@ -98,11 +99,20 @@ else
   sudo apt-get install -y cmake
   sudo apt-get install -y ctags
   sudo apt-get install -y openssl libssl-dev
+  sudo apt-get install -y openssh-server
   sudo apt-get install -y wget
   sudo apt-get install -y curl
   sudo apt-get install -y vim-nox
   sudo apt-get install -y python-dev
   sudo apt-get install -y build-essential
+  sudo apt-get install -y gnupg gnupg2 gpgsm
+
+  if [ ! -f /etc/apt/sources.list.d/nodesource.list ]; then
+    sudo $HOME_FILES_DIR/node_setup_4.x.sh
+  fi
+  sudo apt-get install -y nodejs
 
 fi
+
+$HOME_FILES_DIR/p4/p4.sh
 

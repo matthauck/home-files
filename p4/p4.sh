@@ -9,12 +9,14 @@ ORIG_DIR=$(cd "$( dirname $0 )" && pwd )
 
 if which apt-get > /dev/null; then
 
-  sudo apt-key add $ORIG_DIR/perforce.pubkey
+  if [ ! -f /etc/apt/sources.list.d/perforce.list ]; then
+      sudo apt-key add $ORIG_DIR/perforce.pubkey
 
-  codename=$(lsb_release -c | awk '{print $2}')
-  echo "deb http://package.perforce.com/apt/ubuntu $codename release" | sudo tee  /etc/apt/sources.list.d/perforce.list
+      codename=$(lsb_release -c | awk '{print $2}')
+      echo "deb http://package.perforce.com/apt/ubuntu $codename release" | sudo tee  /etc/apt/sources.list.d/perforce.list
 
-  sudo apt-get update
+      sudo apt-get update
+  fi
 
   sudo apt-get install -y helix-cli perforce-p4python
 
