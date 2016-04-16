@@ -16,7 +16,17 @@
   s = show -w -b --stat -p
   st = status -s -b
   ff = pull --ff-only
+  b = branch
+  co = checkout
 [branch "master"]
   rebase = true
 [push]
   default = simple
+[git-p4]
+	largeFileSystem = GitLFS
+[merge]
+	ff = only
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true

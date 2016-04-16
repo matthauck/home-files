@@ -41,7 +41,7 @@ else
 fi
 
 export JAVA_OPTS="-Xms512m -Xmx2048m"
-export GOPATH=/usr/local/bin
+export GOPATH=~/.gocode
 
 export FIGNORE=".svn:.git:.DS_Store"
 export PAGER=less
@@ -50,7 +50,7 @@ export PAGER=less
 [ "$TERM" = "xterm" ] && TERM="xterm-256color"
 
 # setup path
-export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH:$HOME/.cabal/bin
+export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH:$GOPATH/bin:$HOME/.cabal/bin
 
 # init rbenv
 if which rbenv > /dev/null 2>&1 ; then eval "$(rbenv init -)"; fi
