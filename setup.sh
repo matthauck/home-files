@@ -123,6 +123,8 @@ else
   installit vim-nox
   installit python-dev
   installit build-essential
+  installit autoconf libtool
+  installit ninja-build
   installit gnupg gnupg2 gpgsm
   installit tmux
   installit pass
