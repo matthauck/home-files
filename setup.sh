@@ -99,6 +99,7 @@ if [ "$IS_MAC" = true ]; then
   ! has_brew "macvim" || (install_brew macvim --with-lua && brew linkapps macvim)
   ! has_brew "node" || install_brew node
   ! has_brew "tmux" || install_brew tmux
+  ! has_brew "pass" || install_brew pass
 
 else
 
@@ -124,6 +125,7 @@ else
   installit build-essential
   installit gnupg gnupg2 gpgsm
   installit tmux
+  installit pass
 
   if [ ! -f /etc/apt/sources.list.d/nodesource.list ]; then
     sudo $HOME_FILES_DIR/node_setup_4.x.sh
