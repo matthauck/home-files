@@ -100,6 +100,7 @@ if [ "$IS_MAC" = true ]; then
   ! has_brew "node" || install_brew node
   ! has_brew "tmux" || install_brew tmux
   ! has_brew "pass" || install_brew pass
+  ! has_brew "rbenv" || install_brew rbenv
 
 else
 
@@ -122,6 +123,7 @@ else
   installit curl
   installit vim-nox
   installit python-dev
+  installit ruby-build rbenv
   installit build-essential
   installit autoconf libtool
   installit ninja-build
@@ -136,5 +138,14 @@ else
 
 fi
 
+# setup p4
 $HOME_FILES_DIR/p4/p4.sh
+
+# setup ruby
+if [ ! -e ~/.rbenv ]; then
+    eval "$(rbenv init -)"
+    rbenv install 1.9.3-p194
+    rbenv global 1.9.3-p194
+    rbenv rehash
+fi
 
