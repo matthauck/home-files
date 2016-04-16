@@ -101,6 +101,7 @@ if [ "$IS_MAC" = true ]; then
   ! has_brew "tmux" || install_brew tmux
   ! has_brew "pass" || install_brew pass
   ! has_brew "rbenv" || install_brew rbenv
+  ! has_brew "git-lfs" || install_brew git-lfs
 
 else
 
@@ -135,6 +136,11 @@ else
     sudo $HOME_FILES_DIR/node_setup_4.x.sh
   fi
   installit nodejs
+
+  if [ ! -f /etc/apt/sources.list.d/github_git-lfs.list ]; then
+    curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
+  fi
+  installit git-lfs
 
 fi
 
