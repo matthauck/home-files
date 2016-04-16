@@ -133,7 +133,7 @@ else
   installit pass
 
   if [ ! -f /etc/apt/sources.list.d/nodesource.list ]; then
-    sudo $HOME_FILES_DIR/node_setup_4.x.sh
+    curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
   fi
   installit nodejs
 
