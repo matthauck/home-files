@@ -149,3 +149,8 @@ if [ ! -e ~/.rbenv ]; then
     rbenv rehash
 fi
 
+# setup npm packages
+if ! which tslint > /dev/null; then
+  sudo npm install -g tslint tsc bower karma-cli grunt-cli
+fi
+
