@@ -142,6 +142,12 @@ else
   fi
   installit git-lfs
 
+  # setup etc
+  for f in $(cd linux/etc; find . -type f); do
+    if [ ! -e /etc/$f ]; then
+      sudo cp -v linux/etc/$f /etc/$f
+    fi
+  done
 fi
 
 # setup p4
