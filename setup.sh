@@ -143,9 +143,9 @@ else
   installit git-lfs
 
   # setup etc
-  for f in $(cd linux/etc; find . -type f); do
+  for f in $(cd $HOME_FILES_DIR/linux/etc; find . -type f); do
     if [ ! -e /etc/$f ]; then
-      sudo cp -v linux/etc/$f /etc/$f
+      sudo cp -v $HOME_FILES_DIR/linux/etc/$f /etc/$f
     fi
   done
 fi
