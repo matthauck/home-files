@@ -28,6 +28,22 @@ if which apt-get > /dev/null; then
 
   installit helix-cli perforce-p4python
 
+  # install p4v
+  if [ ! -f /usr/share/applications/p4v.desktop ]; then
+
+      P4V_URL=http://cdist2.perforce.com/perforce/r15.2/bin.linux26x86_64/p4v.tgz
+
+      curl -L -o p4v.tgz $P4V_URL
+      tar -xzf p4v.tgz
+      # there should only be one
+      cd p4v-*
+
+      sudo cp -r bin/* /usr/local/bin/
+      sudo cp -r lib/* /usr/local/lib/
+
+      sudo cp $ORIG_DIR/p4v.desktop /usr/share/applications/p4v.desktop
+  fi
+
   exit
 fi
 
