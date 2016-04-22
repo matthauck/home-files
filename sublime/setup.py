@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import os, sys, platform
+import shutil
 import subprocess
 import zipfile
 
@@ -55,6 +56,10 @@ def symlink_user_dir():
         subprocess.check_call(['mklink', '/D', users_dir, target], shell=True)
     else:
         os.symlink(target, users_dir)
+
+    # cp preferences template
+    shutil.copy(os.path.join(users_dir, 'Preferences.sublime-settings.template'),
+                os.path.join(users_dir, 'Preferences.sublime-settings'))
 
 def current_dir():
     return os.path.dirname(os.path.realpath(__file__))
