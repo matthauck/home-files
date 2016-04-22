@@ -47,7 +47,7 @@ def symlink_user_dir():
     if os.path.exists(users_dir):
         if os.path.islink(users_dir) or is_windows():
             return
-        os.rename(users_dir, users_dir + '.bak')
+        os.rename(users_dir, os.path.join(packages_dir, '..', 'User.bak'))
 
     print 'Setting up User directory'
     target = os.path.join(current_dir(), 'User')
