@@ -52,7 +52,7 @@ def symlink_user_dir():
     print 'Setting up User directory'
     target = os.path.join(current_dir(), 'User')
     if is_windows():
-        subprocess.check_call(['mklink', '/D', users_dir, target])
+        subprocess.check_call(['mklink', '/D', users_dir, target], shell=True)
     else:
         os.symlink(target, users_dir)
 
