@@ -7,7 +7,7 @@ set -e
 
 ORIG_DIR=$(cd "$( dirname $0 )" && pwd )
 
-if which apt-get > /dev/null; then
+if which apt-get > /dev/null 2>&1; then
 
   function installit() {
     for pkg in $*; do
@@ -45,6 +45,24 @@ if which apt-get > /dev/null; then
   fi
 
   exit
+
+elif which yum > /dev/null 2>&1; then
+
+    release=7
+    if grep -q -i "release 6" /etc/redhat-release; then
+      release=6
+    fi
+
+    sudo rpm --import https://package.perforce.com/perforce.pubkey
+    sudo tee /etc/yum.repos.d/perforce.repo <<EOF
+[perforce]
+name=Perforce
+baseurl=http://package.perforce.com/yum/rhel/$release/x86_64
+enabled=1
+gpgcheck=1
+EOF
+    sudo yum install -y helix-cli helix-git-fusion-p4python
+    exit
 fi
 
 TMP_DIR=$(mktemp -d /tmp/p4temp.XXXX)
