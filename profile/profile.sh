@@ -37,6 +37,7 @@ if [ "$IS_MAC" = true ]; then
   export JAVA_HOME=/Library/Java/Home
   export EDITOR="mvim -v"
 else
+  export JAVA_HOME=/usr/lib/jvm/default-java
   export EDITOR="vim"
 fi
 
@@ -86,22 +87,26 @@ alias ps1withgit="export PS1='$PS1WITHGIT'"
 # enable/launch gpg-agent if installed
 function enable_gpg_agent() {
   if which gpg-agent > /dev/null 2>&1; then
-    if test -f $HOME/.gpg-agent-info && \
-      kill -0 `cut -d: -f 2 $HOME/.gpg-agent-info` 2> /dev/null; then
-      eval $(cat $HOME/.gpg-agent-info)
-      export GPG_AGENT_INFO
-      export SSH_AUTH_SOCK
-      export SSH_AGENT_PID
+    if [ -e $HOME/.gnupg/S.gpg-agent.ssh ]; then
+      export SSH_AUTH_SOCK=$HOME/.gnupg/S.gpg-agent.ssh
     else
-      eval $(gpg-agent --daemon --write-env-file --enable-ssh)
+      if test -f $HOME/.gpg-agent-info && \
+        kill -0 `cut -d: -f 2 $HOME/.gpg-agent-info` 2> /dev/null; then
+        eval $(cat $HOME/.gpg-agent-info)
+        export GPG_AGENT_INFO
+        export SSH_AUTH_SOCK
+        export SSH_AGENT_PID
+      else
+        eval $(gpg-agent --daemon --write-env-file --enable-ssh)
+      fi
+      export GPG_TTY=$(tty)
     fi
-    export GPG_TTY=$(tty)
   fi
 }
 
 # don't enable gpg agent over ssh since this breaks agent forwarding
 if [[ -z "$SSH_CLIENT" ]] && [[ -z "$SSH_TTY" ]]; then
-  enable_gpg_agent
+   enable_gpg_agent
 fi
 
 # aliases
