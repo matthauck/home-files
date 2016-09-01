@@ -16,13 +16,6 @@ fi
 # http://stackoverflow.com/a/246128
 MYDIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
-# git bash completion
-if [ -d /usr/local/bash_completion.d ]; then
-  source /usr/local/etc/bash_completion.d/git-completion.bash && \
-  source /usr/local/etc/bash_completion.d/git-prompt.sh && \
-  GIT_PS1_SHOWDIRTYSTATE=TRUE
-fi
-
 if [ "$IS_MAC" = true ]; then
   if [ -f $(brew --prefix)/etc/bash_completion ]; then
     . $(brew --prefix)/etc/bash_completion
@@ -75,7 +68,8 @@ export PS1WITHGIT=$TERMINAL_COLOR'['$grey'$(date +"%H:%M")'$TERMINAL_COLOR'] '$T
 export PS1NOGIT=$TERMINAL_COLOR'['$grey'$(date +"%H:%M")'$TERMINAL_COLOR'] '$TERMINAL_COLOR'\h\\\u ['$grey'\w'$TERMINAL_COLOR']'$grey$TERMINAL_COLOR' \$ '$reset
 
 # default to git info (turn-off-able for super large git repos, i.e. chromium)
-if [ "$GIT_PS1_SHOWDIRTYSTATE" = true ]; then
+if type -t __git_ps1 2>&1 > /dev/null; then
+  GIT_PS1_SHOWDIRTYSTATE=true
   export PS1=$PS1WITHGIT
 else
   export PS1=$PS1NOGIT
