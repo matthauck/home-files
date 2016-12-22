@@ -122,4 +122,12 @@ alias gradle="gradle --daemon"
 alias up="while [[ ! -f build.gradle ]] && [[ ! -d ../../workspace ]] && [[ ! -f .gitignore ]]; do cd ..; done"
 alias p4changes="p4 changes -u $P4USER -s pending -c $P4CLIENT"
 
-
+function forward-gpg() {
+  host=$1
+  if [ -z $2 ]; then
+    user=$(whoami)
+  else
+    user=$2
+  fi
+  ssh -N -o "StreamLocalBindUnlink=yes" -R /home/$user/.gnupg/S.gpg-agent:$HOME/.gnupg/S.gpg-agent $user@$host
+}
