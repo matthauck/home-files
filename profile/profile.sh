@@ -18,7 +18,9 @@ MYDIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 if [ "$IS_MAC" = true ]; then
   if [ -f $(brew --prefix)/etc/bash_completion ]; then
-    . $(brew --prefix)/etc/bash_completion
+    . $(brew --prefix)/etc/bash_completion.d/git-completion.bash
+    . $(brew --prefix)/etc/bash_completion.d/git-prompt.sh
+    . $(brew --prefix)/etc/bash_completion.d/password-store
   fi
 fi
 
@@ -78,7 +80,7 @@ fi
 alias ps1nogit="export PS1='$PS1NOGIT'"
 alias ps1withgit="export PS1='$PS1WITHGIT'"
 
-# enable/launch gpg-agent if installed
+# enable/launch gpg-agent if installed -- pre-2.0
 function enable_gpg_agent() {
   if which gpg-agent > /dev/null 2>&1; then
     if [ -e $HOME/.gnupg/S.gpg-agent.ssh ]; then
@@ -124,10 +126,14 @@ alias p4changes="p4 changes -u $P4USER -s pending -c $P4CLIENT"
 
 function forward-gpg() {
   host=$1
+  if [ -z "$host" ]; then
+    echo "Usage: forward-gpg host [ <remote-user> ]"
+    return
+  fi
   if [ -z $2 ]; then
     user=$(whoami)
   else
     user=$2
   fi
-  ssh -N -o "StreamLocalBindUnlink=yes" -R /home/$user/.gnupg/S.gpg-agent:$HOME/.gnupg/S.gpg-agent $user@$host
+  ssh -N -o "StreamLocalBindUnlink=yes" -R /home/$user/.gnupg/S.gpg-agent:$HOME/.gnupg/S.gpg-agent.extra $user@$host
 }
