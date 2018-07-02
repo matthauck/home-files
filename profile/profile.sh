@@ -80,8 +80,10 @@ fi
 alias ps1nogit="export PS1='$PS1NOGIT'"
 alias ps1withgit="export PS1='$PS1WITHGIT'"
 
-if [ -e $XDG_RUNTIME_DIR/gnupg ]; then
-  GNUPG_SOCKETS=$XDG_RUNTIME_DIR/gnupg
+# snap sometimes messes with $XDG_RUNTIME_DIR
+RUN_DIR=/run/user/$(id -u)
+if [ -e $RUN_DIR/gnupg ]; then
+  GNUPG_SOCKETS=$RUN_DIR/gnupg
 else
   GNUPG_SOCKETS=$HOME/.gnupg
 fi
