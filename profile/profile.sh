@@ -80,11 +80,18 @@ fi
 alias ps1nogit="export PS1='$PS1NOGIT'"
 alias ps1withgit="export PS1='$PS1WITHGIT'"
 
+if [ -e $XDG_RUNTIME_DIR/gnupg ]; then
+  GNUPG_SOCKETS=$XDG_RUNTIME_DIR/gnupg
+else
+  GNUPG_SOCKETS=$HOME/.gnupg
+fi
+
 # enable/launch gpg-agent if installed -- pre-2.0
 function enable_gpg_agent() {
   if which gpg-agent > /dev/null 2>&1; then
-    if [ -e $HOME/.gnupg/S.gpg-agent.ssh ]; then
-      export SSH_AUTH_SOCK=$HOME/.gnupg/S.gpg-agent.ssh
+    gpgconf --launch gpg-agent
+    if [ -e $GNUPG_SOCKETS/S.gpg-agent.ssh ]; then
+      export SSH_AUTH_SOCK=$GNUPG_SOCKETS/S.gpg-agent.ssh
     else
       if test -f $HOME/.gpg-agent-info && \
         kill -0 `cut -d: -f 2 $HOME/.gpg-agent-info` 2> /dev/null; then
@@ -135,5 +142,5 @@ function forward-gpg() {
   else
     user=$2
   fi
-  ssh -N -o "StreamLocalBindUnlink=yes" -R /home/$user/.gnupg/S.gpg-agent:$HOME/.gnupg/S.gpg-agent.extra $user@$host
+  ssh -N -o "StreamLocalBindUnlink=yes" -R /home/$user/.gnupg/S.gpg-agent:$GNUPG_SOCKETS/S.gpg-agent.extra $user@$host
 }
