@@ -20,7 +20,7 @@ if [ "$IS_MAC" = true ]; then
   if [ -f $(brew --prefix)/etc/bash_completion ]; then
     . $(brew --prefix)/etc/bash_completion.d/git-completion.bash
     . $(brew --prefix)/etc/bash_completion.d/git-prompt.sh
-    . $(brew --prefix)/etc/bash_completion.d/password-store
+    . $(brew --prefix)/etc/bash_completion.d/pass
   fi
 fi
 
