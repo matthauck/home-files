@@ -149,9 +149,6 @@ else
   done
 fi
 
-# setup p4
-$HOME_FILES_DIR/p4/p4.sh
-
 # setup ruby
 if [ ! -e ~/.rbenv ]; then
     eval "$(rbenv init -)"

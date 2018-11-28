@@ -1,7 +1,0 @@
-[Desktop Entry]
-Name=p4v
-GenericName=Perforce Visual Client
-Exec=/usr/local/bin/p4v
-Icon=/usr/local/lib/p4v/P4VResources/icons/P4-V_96x96.png
-Type=Application
-MimeType=text/plain;
