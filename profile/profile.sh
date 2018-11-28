@@ -30,7 +30,7 @@ export GROOVY_HOME=/usr/local/opt/groovy/libexec
 
 if [ "$IS_MAC" = true ]; then
   export JAVA_HOME=/Library/Java/Home
-  export EDITOR="mvim -v"
+  export EDITOR="nvim"
 else
   export JAVA_HOME=/usr/lib/jvm/default-java
   export EDITOR="vim"
@@ -119,8 +119,8 @@ fi
 alias ls='ls -G'
 
 if [ "$IS_MAC" = true ]; then
-  alias vi='mvim -v'
-  alias vim='mvim -v'
+  alias vi='nvim'
+  alias vim='nvim'
   alias flushdns="sudo killall -HUP mDNSResponder"
 else
   alias vi='vim'

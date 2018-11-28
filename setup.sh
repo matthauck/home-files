@@ -96,7 +96,7 @@ if [ "$IS_MAC" = true ]; then
   ! has_brew "ctags" || install_brew ctags
   ! has_brew "openssl" || install_brew openssl
   ! has_brew "wget" || install_brew wget
-  ! has_brew "macvim" || (install_brew macvim --with-lua && brew linkapps macvim)
+  ! has_brew "neovim" || install_brew neovim
   ! has_brew "node" || install_brew node
   ! has_brew "tmux" || install_brew tmux
   ! has_brew "pass" || install_brew pass
