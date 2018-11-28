@@ -122,6 +122,11 @@ if is_mosh; then
   export SSH_AUTH_SOCK=$THE_GPG_SSH_SOCK
 fi
 
+# source fzf for mac only since it auto installs on linux
+if [ "$IS_MAC" = true ]; then
+  [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+fi
+
 # aliases
 
 alias ls='ls -G'
