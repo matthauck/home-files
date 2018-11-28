@@ -166,6 +166,11 @@ if ! installed "rg"; then
   cargo install ripgrep
 fi
 
+if [ ! -e ~/.fzf ]; then
+  git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+  ~/.fzf/install --all
+fi
+
 # setup sublime text
 python $HOME_FILES_DIR/sublime/setup.py
 
