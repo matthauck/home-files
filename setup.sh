@@ -152,8 +152,8 @@ fi
 # setup ruby
 if [ ! -e ~/.rbenv ]; then
     eval "$(rbenv init -)"
-    rbenv install 1.9.3-p194
-    rbenv global 1.9.3-p194
+    rbenv install 2.5.3
+    rbenv global 2.5.3
     rbenv rehash
 fi
 
