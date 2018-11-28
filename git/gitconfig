@@ -1,6 +1,7 @@
 [user]
-	email = matt.hauck@tanium.com
-	name = Matt Hauck
+  email = matt.hauck@tanium.com
+  name = Matt Hauck
+  signingkey = EA7294E810CFF74AB076C96D158CF5C59AE20EBE
 [branch]
   autosetupmerge = true
   autosetuprebase = always
@@ -8,25 +9,33 @@
   status = auto
   branch = auto
 [alias]
-  lg = log --graph --date=short --pretty=format:'%C(blue)%cd %C(magenta)| %C(blue)%h %C(magenta)| %Creset%s %C(yellow)<%an>%C(red)%d'
-  lgf = log -C -M --follow --graph --date=short --pretty=format:'%C(blue)%cd %C(magenta)| %C(blue)%h %C(magenta)| %Creset%s %C(yellow)<%an>%C(red)%d'
+  lg = log --graph --date=short --pretty=format:'%C(blue)%cd %C(magenta)| %C(blue)%h %G? %C(magenta)| %Creset%s %C(yellow)<%an>%C(red)%d'
+  lgf = log -C -M --follow --graph --date=short --pretty=format:'%C(blue)%cd %C(magenta)| %C(blue)%h %G? %C(magenta)| %Creset%s %C(yellow)<%an>%C(red)%d'
   l  = log --name-status --relative
   lp = log -p --relative -b -w --stat
   d  = diff -w -b
   s = show -w -b --stat -p
   st = status -s -b
   ff = pull --ff-only
-  b = branch
+  b = branch --sort=-committerdate
   co = checkout
+  cp = cherry-pick
+  cpx = -c merge.renameLimit=999999 cherry-pick -x
+  cpX = -c merge.renameLimit=999999 cherry-pick -x -X ignore-all-space
+  mff = merge --ff-only
+  find-file = "!for branch in $(git for-each-ref --format=\"%(refname)\" refs/heads); do if git ls-tree -r --name-only $branch | grep \"$1\" > /dev/null; then  echo \"${branch}:\"; git ls-tree -r --name-only $branch | nl -bn -w3 | grep \"$1\"; fi; done; :"
 [branch "master"]
   rebase = true
 [push]
-  default = simple
-[git-p4]
-	largeFileSystem = GitLFS
-[merge]
-	ff = only
+  default = upstream
+[commit]
+  gpgsign = true
+[lfs]
+  concurrenttransfers = 10
+[fetch]
+  prune = true
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	required = true
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
+  clean = git-lfs clean -- %f
