@@ -47,12 +47,11 @@ if [ ! -e ~/.vimrc ]; then
   cp "${HOME_FILES_DIR}/dotvim/sample.vimrc" ~/.vimrc
 fi
 # setup neovim
-if [ ! -L ~/.config/nvim ]; then
-  mkdir -p ~/.config > /dev/null
-  ln -s ~/.vim ~/.config/nvim
+if [ ! -d ~/.config/nvim ]; then
+  mkdir -p ~/.config/nvim > /dev/null
 fi
-if [ ! -e ~/.nvimrc ]; then
-  cp "${HOME_FILES_DIR}/dotvim/sample.nvimrc" ~/.nvimrc
+if [ ! -e ~/.config/nvim/init.vim ]; then
+  cp "${HOME_FILES_DIR}/dotvim/sample.nvimrc" ~/.config/nvim/init.vim
 fi
 
 # setup tmux config
