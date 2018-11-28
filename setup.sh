@@ -162,6 +162,7 @@ fi
 # setup rust
 if ! installed "rustc"; then
   curl -sSf https://sh.rustup.rs | sh -s -- -y
+  rustup component add rls-preview rust-analysis rust-src
 fi
 
 if ! installed "rg"; then
