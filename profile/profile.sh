@@ -16,6 +16,8 @@ fi
 # http://stackoverflow.com/a/246128
 MYDIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
+. $MYDIR/is_mosh.sh
+
 if [ "$IS_MAC" = true ]; then
   if [ -f $(brew --prefix)/etc/bash_completion ]; then
     . $(brew --prefix)/etc/bash_completion.d/git-completion.bash
@@ -88,12 +90,14 @@ else
   GNUPG_SOCKETS=$HOME/.gnupg
 fi
 
+THE_GPG_SSH_SOCK=$GNUPG_SOCKETS/S.gpg-agent.ssh
+
 # enable/launch gpg-agent if installed -- pre-2.0
 function enable_gpg_agent() {
   if which gpg-agent > /dev/null 2>&1; then
     gpgconf --launch gpg-agent
     if [ -e $GNUPG_SOCKETS/S.gpg-agent.ssh ]; then
-      export SSH_AUTH_SOCK=$GNUPG_SOCKETS/S.gpg-agent.ssh
+      export SSH_AUTH_SOCK=$THE_GPG_SSH_SOCK
     else
       if test -f $HOME/.gpg-agent-info && \
         kill -0 `cut -d: -f 2 $HOME/.gpg-agent-info` 2> /dev/null; then
@@ -112,6 +116,10 @@ function enable_gpg_agent() {
 # don't enable gpg agent over ssh since this breaks agent forwarding
 if [[ -z "$SSH_CLIENT" ]] && [[ -z "$SSH_TTY" ]]; then
    enable_gpg_agent
+fi
+
+if is_mosh; then
+  export SSH_AUTH_SOCK=$THE_GPG_SSH_SOCK
 fi
 
 # aliases
