@@ -101,6 +101,8 @@ if [ "$IS_MAC" = true ]; then
   ! has_brew "pass" || install_brew pass
   ! has_brew "rbenv" || install_brew rbenv
   ! has_brew "git-lfs" || install_brew git-lfs
+  ! has_brew "yarn" || install_brew yarn
+  ! has_brew "pstree" || install_brew pstree
 
 else
 
