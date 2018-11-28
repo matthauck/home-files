@@ -157,6 +157,15 @@ if [ ! -e ~/.rbenv ]; then
     rbenv rehash
 fi
 
+# setup rust
+if ! installed "rustc"; then
+  curl -sSf https://sh.rustup.rs | sh -s -- -y
+fi
+
+if ! installed "rg"; then
+  cargo install ripgrep
+fi
+
 # setup sublime text
 python $HOME_FILES_DIR/sublime/setup.py
 
