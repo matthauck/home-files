@@ -16,20 +16,28 @@ fi
 # http://stackoverflow.com/a/246128
 MYDIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
+MYDIR=$( cd "$( dirname "$0" )" && pwd )
+
 . $MYDIR/is_mosh.sh
+. $MYDIR/../git/git.zsh
 
 if [ "$IS_MAC" = true ]; then
-  if [ -f $(brew --prefix)/etc/bash_completion ]; then
-    . $(brew --prefix)/etc/bash_completion.d/git-completion.bash
-    . $(brew --prefix)/etc/bash_completion.d/git-prompt.sh
-    . $(brew --prefix)/etc/bash_completion.d/pass
+#  if [ -f $(brew --prefix)/etc/bash_completion ]; then
+#    . $(brew --prefix)/etc/bash_completion.d/git-completion.bash
+#    . $(brew --prefix)/etc/bash_completion.d/git-prompt.sh
+#    . $(brew --prefix)/etc/bash_completion.d/pass
+#  fi
+
+  if type brew &>/dev/null; then
+    FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+
+    autoload -Uz compinit
+    compinit
   fi
 fi
 
-# useful homes, opts variables
-export NODE_PATH=/usr/local/lib/node_modules
-export GROOVY_HOME=/usr/local/opt/groovy/libexec
 
+# useful homes, opts variables
 if [ "$IS_MAC" = true ]; then
   export JAVA_HOME=/Library/Java/Home
   export EDITOR="nvim"
@@ -39,7 +47,6 @@ else
 fi
 
 export JAVA_OPTS="-Xms512m -Xmx2048m"
-export GOPATH=~/.gocode
 
 export FIGNORE=".svn:.git:.DS_Store"
 export PAGER=less
@@ -58,8 +65,11 @@ reset="\[\e[00m\]"
 red="\[\e[01;31m\]"
 green="\[\e[01;32m\]"
 yellow="\[\e[01;33m\]"
-blue="\[\e[01;34m\]"
-grey="\[\e[01;30m\]"
+#blue="\[\e[01;34m\]"
+#grey="\[\e[01;30m\]"
+
+blue=39
+grey=246
 
 # set default color to blue. can override in conf.sh
 TERMINAL_COLOR=$blue
@@ -68,19 +78,18 @@ TERMINAL_COLOR=$blue
 [[ -e ~/conf.sh ]] && source ~/conf.sh
 
 ## PS1
-export PS1WITHGIT=$TERMINAL_COLOR'['$grey'$(date +"%H:%M")'$TERMINAL_COLOR'] '$TERMINAL_COLOR'\h\\\u ['$grey'\w'$TERMINAL_COLOR']'$grey'$(__git_ps1)'$TERMINAL_COLOR' \$ '$reset
-export PS1NOGIT=$TERMINAL_COLOR'['$grey'$(date +"%H:%M")'$TERMINAL_COLOR'] '$TERMINAL_COLOR'\h\\\u ['$grey'\w'$TERMINAL_COLOR']'$grey$TERMINAL_COLOR' \$ '$reset
+# export PS1WITHGIT=$TERMINAL_COLOR'['$grey'$(date +"%H:%M")'$TERMINAL_COLOR'] '$TERMINAL_COLOR'\h\\\u ['$grey'\w'$TERMINAL_COLOR']'$grey'$(__git_ps1)'$TERMINAL_COLOR' \$ '$reset
+#export PS1NOGIT=$TERMINAL_COLOR'['$grey'$(date +"%H:%M")'$TERMINAL_COLOR'] '$TERMINAL_COLOR'\h\\\u ['$grey'\w'$TERMINAL_COLOR']'$grey$TERMINAL_COLOR' \$ '$reset
 
-# default to git info (turn-off-able for super large git repos, i.e. chromium)
-if type -t __git_ps1 2>&1 > /dev/null; then
-  GIT_PS1_SHOWDIRTYSTATE=true
-  export PS1=$PS1WITHGIT
-else
-  export PS1=$PS1NOGIT
-fi
+export ZSH_THEME_GIT_PROMPT_PREFIX="("
+export ZSH_THEME_GIT_PROMPT_SUFFIX=") "
+export ZSH_THEME_GIT_PROMPT_DIRTY=" *"
 
-alias ps1nogit="export PS1='$PS1NOGIT'"
-alias ps1withgit="export PS1='$PS1WITHGIT'"
+setopt prompt_subst
+
+export PROMPT='%F{'$blue'}[%F{'$grey'}$(date +"%H:%M")%F{'$blue'}] %n\\%m [%F{'$grey'}%~%F{'$blue'}] %F{'$grey'}$(git_prompt_info)%F{'$blue'}\$ %f'
+#export PROMPT='%n\\%m $(git_prompt_info)\$ %f'
+
 
 # snap sometimes messes with $XDG_RUNTIME_DIR
 RUN_DIR=/run/user/$(id -u)
@@ -124,7 +133,7 @@ fi
 
 # source fzf for mac only since it auto installs on linux
 if [ "$IS_MAC" = true ]; then
-  [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+  [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 fi
 
 # aliases
