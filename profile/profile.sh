@@ -1,3 +1,7 @@
+# setup path
+export GOPATH=~/.gocode
+export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:/opt/homebrew/bin:$PATH:$GOPATH/bin
+source $HOME/.cargo/env
 
 # whether or not on mac
 if [ $(uname) = "Darwin" ]; then
@@ -39,19 +43,12 @@ else
 fi
 
 export JAVA_OPTS="-Xms512m -Xmx2048m"
-export GOPATH=~/.gocode
 
 export FIGNORE=".svn:.git:.DS_Store"
 export PAGER=less
 
 # update terminal colors for ssh from putty
 [ "$TERM" = "xterm" ] && TERM="xterm-256color"
-
-# setup path
-export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH:$GOPATH/bin:$HOME/.cabal/bin
-
-# init rbenv
-if which rbenv > /dev/null 2>&1 ; then eval "$(rbenv init -)"; fi
 
 # some terminal colors
 reset="\[\e[00m\]"
@@ -141,10 +138,7 @@ fi
 
 alias Rgrep='find . | xargs grep' # for when `grep -R` is not present...
 alias grep='grep --color'
-alias be='bundle exec'
-alias gradle="gradle --daemon"
 alias up="while [[ ! -f build.gradle ]] && [[ ! -d ../../workspace ]] && [[ ! -f .gitignore ]]; do cd ..; done"
-alias p4changes="p4 changes -u $P4USER -s pending -c $P4CLIENT"
 
 function forward-gpg1() {
   host=$1

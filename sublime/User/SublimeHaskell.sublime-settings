@@ -1,8 +1,0 @@
-{
-	"enable_hdevtools": false,
-
-	"add_to_PATH": ["/Users/mhauck/.cabal/bin"],
-
-	"enable_auto_check": false
-
-}

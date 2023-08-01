@@ -1,5 +1,0 @@
-{
-	"cmd": ["/usr/local/bin/scala", "-cp", "/Users/mhauck/bin/classes", "JavaTest", "$file"],
-	// "cmd": ["/usr/local/bin/scala", "/Users/mhauck/bin/JavaTest.scala", "$file"],
-	"selector": "source.java"
-}

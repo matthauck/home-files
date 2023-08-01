@@ -89,20 +89,13 @@ if [ "$IS_MAC" = true ]; then
   fi
 
   echo "Installing packagess..."
-  ! has_brew "the_silver_searcher" || install_brew the_silver_searcher
   ! has_brew "git" || install_brew git
-  ! has_brew "cmake" || install_brew cmake
-  ! has_brew "ctags" || install_brew ctags
   ! has_brew "openssl" || install_brew openssl
   ! has_brew "wget" || install_brew wget
   ! has_brew "neovim" || install_brew neovim
-  ! has_brew "node" || install_brew node
   ! has_brew "tmux" || install_brew tmux
   ! has_brew "pass" || install_brew pass
-  ! has_brew "rbenv" || install_brew rbenv
   ! has_brew "git-lfs" || install_brew git-lfs
-  ! has_brew "yarn" || install_brew yarn
-  ! has_brew "pstree" || install_brew pstree
 
 else
 
@@ -115,7 +108,6 @@ else
   }
 
   echo "Installing packages (may require password)..."
-  installit silversearcher-ag
   installit git
   installit cmake
   installit ctags
@@ -125,7 +117,6 @@ else
   installit curl
   installit vim-nox
   installit python-dev
-  installit ruby-build rbenv
   installit build-essential
   installit autoconf libtool
   installit ninja-build
@@ -151,14 +142,6 @@ else
   done
 fi
 
-# setup ruby
-if [ ! -e ~/.rbenv ]; then
-    eval "$(rbenv init -)"
-    rbenv install 2.5.3
-    rbenv global 2.5.3
-    rbenv rehash
-fi
-
 # setup rust
 if ! installed "rustc"; then
   curl -sSf https://sh.rustup.rs | sh -s -- -y
@@ -173,7 +156,3 @@ if [ ! -e ~/.fzf ]; then
   git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
   ~/.fzf/install --all
 fi
-
-# setup sublime text
-python $HOME_FILES_DIR/sublime/setup.py
-
